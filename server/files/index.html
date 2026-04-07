@@ -6,29 +6,170 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movies!</title>
     <style>
-        /* Part 3: Your styling goes here */
-    </style>
+    /* Grundlegende Stile für die Seite */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+    }
+
+    /* Stile für die Movie-Artikel */
+    .movie {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        padding: 20px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Titel-Stil */
+    .movie h2 {
+        color: #2c3e50;
+        margin-top: 0;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+    }
+
+    /* Meta-Informationen (Jahr, Bewertung, etc.) */
+    .meta {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        font-size: 0.9em;
+        color: #7f8c8d;
+    }
+
+    .meta span {
+        margin-right: 15px;
+    }
+
+    .rating {
+        font-weight: bold;
+        color: #e67e22;
+    }
+
+    /* Poster-Bild */
+    .poster {
+        float: left;
+        margin: 0 20px 10px 0;
+        max-width: 200px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Plot/Handlungsbeschreibung */
+    .movie p {
+        margin-bottom: 15px;
+        text-align: justify;
+    }
+
+    /* Liste mit weiteren Informationen */
+    .info {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        clear: both;
+    }
+
+    .info li {
+        padding: 5px 0;
+        border-bottom: 1px solid #ecf0f1;
+    }
+
+    .info li:last-child {
+        border-bottom: none;
+    }
+
+    .info strong {
+        color: #2c3e50;
+    }
+
+    /* Responsive Design für kleinere Bildschirme */
+    @media (max-width: 600px) {
+        .movie {
+            padding: 15px;
+        }
+
+        .poster {
+            float: none;
+            display: block;
+            margin: 0 auto 15px;
+            max-width: 100%;
+        }
+
+        .meta {
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+</style>
     <script>
         function reverseString(s) {
             return s.split("").reverse().join("");
         }
 
         window.onload = function () {
-            const xhr = new XMLHttpRequest()
+            const xhr = new XMLHttpRequest();
             xhr.onload = function () {
-                const bodyElement = document.querySelector("body")
+                const bodyElement = document.querySelector("body");
                 if (xhr.status == 200) {
-		            /* Part 2: Build the HTML elements here and append them to the body */ 
-                    bodyElement.append(reverseString(xhr.responseText))
-                } else {
-                    bodyElement.append("Daten konnten nicht geladen werden, Status " + xhr.status + " - " + xhr.statusText)
-                }
-            }
-            xhr.open("GET", "/movies")
-            xhr.send()
-        }
-    </script>
+                    const movies = JSON.parse(xhr.responseText);
 
+                    movies.forEach(movie => {
+                        const movieElement = document.createElement("article");
+                        movieElement.classList.add("movie");
+
+                        const titleElement = document.createElement("h2");
+                        titleElement.textContent = movie.Title;
+                        movieElement.appendChild(titleElement);
+
+                        const metaElement = document.createElement("div");
+                        metaElement.classList.add("meta");
+                        metaElement.innerHTML = `
+                            <span class="year">${movie.Year}</span>
+                            <span class="rated">${movie.Rated}</span>
+                            <span class="rating">IMDb: ${movie.imdbRating}</span>
+                        `;
+                        movieElement.appendChild(metaElement);
+
+                        const posterElement = document.createElement("img");
+                        posterElement.src = movie.Poster;
+                        posterElement.alt = `Poster für ${movie.Title}`;
+                        posterElement.classList.add("poster");
+                        movieElement.appendChild(posterElement);
+
+                        const plotElement = document.createElement("p");
+                        plotElement.textContent = movie.Plot;
+                        movieElement.appendChild(plotElement);
+
+                        const infoElement = document.createElement("ul");
+                        infoElement.classList.add("info");
+                        infoElement.innerHTML = `
+                            <li><strong>Regie:</strong> ${movie.Director}</li>
+                            <li><strong>Schauspieler:</strong> ${movie.Actors}</li>
+                            <li><strong>Genre:</strong> ${movie.Genre}</li>
+                            <li><strong>Sprache:</strong> ${movie.Language}</li>
+                            <li><strong>Land:</strong> ${movie.Country}</li>
+                            <li><strong>Laufzeit:</strong> ${movie.Runtime}</li>
+                        `;
+                        movieElement.appendChild(infoElement);
+
+                        bodyElement.appendChild(movieElement);
+                    });
+                } else {
+                    bodyElement.append("Daten konnten nicht geladen werden, Status " + xhr.status + " - " + xhr.statusText);
+                }
+            };
+            xhr.open("GET", "/movies");
+            xhr.send();
+        };
+    </script>
 </head>
 
 <body>
