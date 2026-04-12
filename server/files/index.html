@@ -6,114 +6,149 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movies!</title>
     <style>
-    /* Grundlegende Stile für die Seite */
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        color: #333;
-        background-color: #f5f5f5;
-        margin: 0;
-        padding: 20px;
-    }
+        /* Grundlegende Stile für die Seite */
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
+        }
 
-    /* Stile für die Movie-Artikel */
-    .movie {
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-        padding: 20px;
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+        /* Titel-Stil */
+        h2 {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
 
-    /* Titel-Stil */
-    .movie h2 {
-        color: #2c3e50;
-        margin-top: 0;
-        border-bottom: 2px solid #3498db;
-        padding-bottom: 10px;
-    }
-
-    /* Meta-Informationen (Jahr, Bewertung, etc.) */
-    .meta {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 15px;
-        font-size: 0.9em;
-        color: #7f8c8d;
-    }
-
-    .meta span {
-        margin-right: 15px;
-    }
-
-    .rating {
-        font-weight: bold;
-        color: #e67e22;
-    }
-
-    /* Poster-Bild */
-    .poster {
-        float: left;
-        margin: 0 20px 10px 0;
-        max-width: 200px;
-        border-radius: 4px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Plot/Handlungsbeschreibung */
-    .movie p {
-        margin-bottom: 15px;
-        text-align: justify;
-    }
-
-    /* Liste mit weiteren Informationen */
-    .info {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-        clear: both;
-    }
-
-    .info li {
-        padding: 5px 0;
-        border-bottom: 1px solid #ecf0f1;
-    }
-
-    .info li:last-child {
-        border-bottom: none;
-    }
-
-    .info strong {
-        color: #2c3e50;
-    }
-
-    /* Responsive Design für kleinere Bildschirme */
-    @media (max-width: 600px) {
+        /* Stile für die Movie-Artikel */
         .movie {
-            padding: 15px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .poster {
-            float: none;
-            display: block;
-            margin: 0 auto 15px;
-            max-width: 100%;
+        .movie:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
         }
 
+        /* Meta-Informationen (Jahr, Bewertung, etc.) */
         .meta {
-            flex-direction: column;
-            gap: 5px;
-        }
-    }
-</style>
-    <script>
-        function reverseString(s) {
-            return s.split("").reverse().join("");
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+            flex-wrap: wrap;
         }
 
+        .meta span {
+            margin-right: 15px;
+            margin-bottom: 5px;
+        }
+
+        .rating {
+            font-weight: bold;
+            color: #e67e22;
+        }
+
+        /* Poster-Bild */
+        .poster {
+            float: left;
+            margin: 0 20px 10px 0;
+            max-width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .poster:hover {
+            transform: scale(1.02);
+        }
+
+        /* Plot/Handlungsbeschreibung */
+        .movie p {
+            margin-bottom: 15px;
+            text-align: justify;
+            color: #555;
+        }
+
+        /* Liste mit weiteren Informationen */
+        .info {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            clear: both;
+        }
+
+        .info li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .info li:last-child {
+            border-bottom: none;
+        }
+
+        .info strong {
+            color: #2c3e50;
+            min-width: 120px;
+        }
+
+        /* Genre-Tags */
+        .genre {
+            background-color: #e0f7fa;
+            color: #00838f;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-right: 8px;
+            margin-bottom: 5px;
+            display: inline-block;
+            font-size: 0.85em;
+            border: 1px solid #b2ebf2;
+        }
+
+        /* Responsive Design für kleinere Bildschirme */
+        @media (max-width: 768px) {
+            .movie {
+                padding: 15px;
+            }
+
+            .poster {
+                float: none;
+                display: block;
+                margin: 0 auto 15px;
+                max-width: 100%;
+            }
+
+            .meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .info li {
+                display: block;
+            }
+        }
+    </style>
+    
+    <script>
         window.onload = function () {
             const xhr = new XMLHttpRequest();
             xhr.onload = function () {
@@ -131,9 +166,15 @@
 
                         const metaElement = document.createElement("div");
                         metaElement.classList.add("meta");
+
+                        const genresHTML = movie.Genres.map(genre =>
+                            `<span class="genre">${genre}</span>`
+                        ).join(" ");
+
                         metaElement.innerHTML = `
-                            <span class="year">${movie.Year}</span>
-                            <span class="rated">${movie.Rated}</span>
+                            <span>${movie.Released}</span>
+                            <span>${movie.Runtime} min</span>
+                            ${genresHTML}
                             <span class="rating">IMDb: ${movie.imdbRating}</span>
                         `;
                         movieElement.appendChild(metaElement);
@@ -151,12 +192,10 @@
                         const infoElement = document.createElement("ul");
                         infoElement.classList.add("info");
                         infoElement.innerHTML = `
-                            <li><strong>Regie:</strong> ${movie.Director}</li>
-                            <li><strong>Schauspieler:</strong> ${movie.Actors}</li>
-                            <li><strong>Genre:</strong> ${movie.Genre}</li>
-                            <li><strong>Sprache:</strong> ${movie.Language}</li>
-                            <li><strong>Land:</strong> ${movie.Country}</li>
-                            <li><strong>Laufzeit:</strong> ${movie.Runtime}</li>
+                            <li><strong>Regie:</strong> <span>${movie.Directors.join(", ")}</span></li>
+                            <li><strong>Schauspieler:</strong> <span>${movie.Actors.join(", ")}</span></li>
+                            <li><strong>Autoren:</strong> <span>${movie.Writers.join(", ")}</span></li>
+                            <li><strong>Metascore:</strong> <span>${movie.Metascore}</span></li>
                         `;
                         movieElement.appendChild(infoElement);
 
